@@ -1,4 +1,39 @@
 # ORBITA Store
+## How to Run
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/oussamah213/ORBITA-store.git
+cd ORBITA-store
+
+2. Install dependencies
+npm install
+
+3. Configure environment variables
+
+Copy the example environment file:
+cp .env.example .env
+
+On Windows PowerShell:
+Copy-Item .env.example .env
+
+Then open .env and configure:
+DATABASE_URL="your_postgresql_connection_string"
+AUTH_SECRET="your_long_random_secret"
+
+4. Set up the database
+
+Make sure PostgreSQL is running and the database configured in DATABASE_URL exists.
+
+Generate the Prisma client:
+npm run prisma:generate
+Apply the development migration:
+npm run prisma:migrate
+
+5. Start the development server
+npm run dev
+
 ## Screenshots
 
 <p align="center">
