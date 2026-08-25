@@ -1,4 +1,20 @@
 # ORBITA Store
+## Screenshots
+
+### Home
+![Home](screenshots/home.png)
+
+### Products
+![Products](screenshots/products.page.png)
+
+### Cart
+![Cart](screenshots/cart.png)
+
+### Wishlist
+![Wishlist](screenshots/wishlist.png)
+
+### Profile
+![Profile](screenshots/profile.png)
 
 ## Local backend setup
 
