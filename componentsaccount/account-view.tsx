@@ -1,0 +1,30 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import { Check, Heart, LogOut, UserRound } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useStore } from "@/context/store-context";
+import type { AuthUser } from "@/types/auth";
+
+export function AccountView({ initialUser }: { initialUser: AuthUser }) {
+  const router = useRouter();
+  const { wishlist, logout, refreshSession } = useStore();
+  const [firstName, setFirstName] = useState(initialUser.firstName);
+  const [lastName, setLastName] = useState(initialUser.lastName);
+  const [status, setStatus] = useState("");
+  const [error, setError] = useState("");
+  const [saving, setSaving] = useState(false);
+  async function saveProfile(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault(); setStatus(""); setError(""); setSaving(true);
+    try {
+      const response = await fetch("/api/account/profile", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ firstName, lastName }) });
+      const data = await response.json() as { error?: string };
+      if (!response.ok) { setError(data.error ?? "We could not save those changes."); return; }
+      await refreshSession(); setStatus("Profile saved.");
+    } catch { setError("We could not reach ORBITA right now."); }
+    finally { setSaving(false); }
+  }
+  async function signOut() { await logout(); router.push("/"); router.refresh(); }
+  return <div className="account-layout"><aside className="account-sidebar"><div className="account-avatar"><UserRound size={22} /></div><strong>{initialUser.firstName} {initialUser.lastName}</strong><span>{initialUser.email}</span><nav aria-label="Account navigation"><a className="is-active" href="#profile">Overview</a><a href="#profile">Profile</a><Link href="/wishlist">Wishlist <b>{wishlist.size}</b></Link></nav><button className="account-logout" onClick={signOut}><LogOut size={16} /> Sign out</button></aside><section className="account-content"><div className="account-welcome"><div><p className="eyebrow">Your orbit</p><h1>Welcome back, {initialUser.firstName}.</h1><p>Manage your profile and keep the things you love close.</p></div><Link href="/wishlist" className="button button-secondary"><Heart size={17} /> Wishlist ({wishlist.size})</Link></div><article className="profile-card" id="profile"><div className="profile-card-heading"><div><p className="eyebrow">Personal details</p><h2>Your profile</h2></div><span><Check size={15} /> Private & secure</span></div><form className="profile-form" onSubmit={saveProfile}><div className="profile-name-grid"><label><span>First name</span><input value={firstName} onChange={(event) => setFirstName(event.target.value)} /></label><label><span>Last name</span><input value={lastName} onChange={(event) => setLastName(event.target.value)} /></label></div><label><span>Email address <small>Read-only</small></span><input value={initialUser.email} readOnly /></label>{error && <p className="form-error" role="alert">{error}</p>}{status && <p className="form-success" role="status">{status}</p>}<button className="button button-primary" disabled={saving}>{saving ? "Saving…" : "Save changes"}</button></form></article><div className="account-notice"><Heart size={19} /><div><strong>Your wishlist is persistent</strong><p>Saved products follow your account across visits and devices. Guest favorites merge when you sign in.</p></div></div></section></div>;
+}
