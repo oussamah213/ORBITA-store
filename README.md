@@ -1,20 +1,25 @@
 # ORBITA Store
 ## Screenshots
 
-### Home
-![Home](screenshots/home.png)
+<p align="center">
+  <img src="screenshots/home.png" width="100%" alt="ORBITA Store Home" />
+</p>
 
-### Products
-![Products](screenshots/products.page.png)
+<p align="center">
+  <img src="screenshots/products.page.png" width="100%" alt="Products Page" />
+</p>
 
-### Cart
-![Cart](screenshots/cart.png)
+<p align="center">
+  <img src="screenshots/cart.png" width="100%" alt="Cart Page" />
+</p>
 
-### Wishlist
-![Wishlist](screenshots/wishlist.png)
+<p align="center">
+  <img src="screenshots/wishlist.png" width="100%" alt="Wishlist Page" />
+</p>
 
-### Profile
-![Profile](screenshots/profile.png)
+<p align="center">
+  <img src="screenshots/profile.png" width="100%" alt="Profile Page" />
+</p>
 
 ## Local backend setup
 
